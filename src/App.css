@@ -1,4 +1,52 @@
-.dark-mode {
-  background-color: brown;
-  color: bisque;
+:root {
+  --pearl-50: #f8f8f2;
+  --pearl-100: #ebebda;
+  --pearl-200: #d6d5b3;
+  --pearl-300: #c0bc89;
+  --pearl-400: #b1a96e;
+  --pearl-500: #a4955c;
+  --pearl-600: #907d4f;
+  --pearl-700: #796444;
+  --pearl-800: #64523c;
+  --pearl-900: #544533;
+  --pearl-950: #2e241a;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--pearl-50);
+  color: var(--pearl-900);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: .5rem;
+  margin: .5rem;
+  border-radius: .5rem;
+}
+
+input {
+  border: none;
+  padding: .5rem;
+  margin: .5rem;
+  border-radius: .5rem;
+}
+
+nav {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav > a {
+  margin: .5rem;
+  text-decoration: none;
+  color: var(--pearl-800);
 }
