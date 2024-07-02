@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const Content = (props) => {
   const [parrafo, setParrafo] = useState('')
 
-  // Trabajando con el useEffect
-  useEffect(() => {
-    // Ejecucion programada
-    console.log('Se monto el componente')
-    return () => {
-      console.log('Se desmonto el componente')
-    }
-  }, []) // <- Array de dependencias
+  // // Trabajando con el useEffect
+  // useEffect(() => {
+  //   // Ejecucion programada
+  //   console.log('Se monto el componente')
+  //   return () => {
+  //     console.log('Se desmonto el componente')
+  //   }
+  // }, []) // <- Array de dependencias
 
-  useEffect(() => {
-    // Ejecucion programada
-    console.log('Se monto el componente por primera vez y se ejecuta en cada cambio')
-    
-  }, [props, parrafo]) // <- Array de dependencias
+  // useEffect(() => {
+  //   // Ejecucion programada
+  //   console.log('Se monto el componente por primera vez y se ejecuta en cada cambio')
+  // }, [props, parrafo]) // <- Array de dependencias
 
   const toggleParrafo = () => {
     if (parrafo === '') {
@@ -30,7 +29,7 @@ const Content = (props) => {
     <main>
       <button onClick={toggleParrafo}>Mostrar/Ocultar párrafo</button>
       <p>
-        {props.contador} - {parrafo}
+        {parrafo}
       </p>
     </main>
   )

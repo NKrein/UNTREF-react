@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Content from './components/Content'
-
+import AuthProvider from './context/AuthProvider' // <- Importamos el provider del contexto que creamos
 
 const App = (props) => {
   // [ valor del estado , funcion para manejar estado ] = useState(valorInicial)
@@ -19,13 +19,15 @@ const App = (props) => {
   }
 
   return (
-    <section>
-      <Navbar />
-      <Content contador={contador}/>
-      <h2>{contador}</h2>
-      {/* Ejecutamos la funcion cuando el usuario hace click en el botón */}
-      <button onClick={sumar}>Sumar</button>
-    </section>
+    <AuthProvider> {/* <- Acá utilizamos el contexto, para envolver la aplicacion */}
+      <section>
+        <Navbar />
+        <Content />
+        <h2>{contador}</h2>
+        {/* Ejecutamos la funcion cuando el usuario hace click en el botón */}
+        <button onClick={sumar}>Sumar</button>
+      </section>
+    </AuthProvider>
   )
 }
 
