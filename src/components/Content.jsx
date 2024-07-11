@@ -1,55 +1,43 @@
-import { useState, useTransition } from "react"
+import { useEffect, useState } from "react"
+import Card from "./Card"
 
 const Content = (props) => {
-  const [parrafo, setParrafo] = useState('')
 
-  // const [isLoading, setIsLoading] = useState(false)
-  // En lugar de gestionar una transicion de manera "manual" con un estado, podemos usar el useTransition
-  // [ transicionPendiente, funcionManejadoraDeInicioDeTransicion ]
-  const [isLoading, startTransition] = useTransition()
+  // Creamos los estados para manejar la informacion, y controlar la UI
+  const [products, setProducts] = useState([]) // <- Para la respuesta de la API
+  const [loading, setLoading] = useState(true) // <- Para indicar en la UI que se esta cargando
 
+  // Usamos promesas en el caso que lo necesitemos (operaciones asincronas internas y logica compleja)
+  const getProducts = new Promise((resolve, reject) => {
+    // Ejecutamos todo el proceso asincrono necesario para retornar la info
+    // Usamos el resolve()
 
-  // // Trabajando con el useEffect
-  // useEffect(() => {
-  //   // Ejecucion programada
-  //   console.log('Se monto el componente')
-  //   return () => {
-  //     console.log('Se desmonto el componente')
-  //   }
-  // }, []) // <- Array de dependencias
+    // En caso de error, usamos reject()
+  })
 
-  // useEffect(() => {
-  //   // Ejecucion programada
-  //   console.log('Se monto el componente por primera vez y se ejecuta en cada cambio')
-  // }, [props, parrafo]) // <- Array de dependencias
+  useEffect(() => {
+    // Ejecutamos el fectch, retornando una promesa que tenemos que manejar
+    fetch('https://fakestoreapi.com/products')
+      .then(response => response.json())
+      .then(data => setProducts(data))
+      .catch(error => console.error('Error al obtener los productos', error))
+      .finally(() => setLoading(false)) // <- Seteamos el "loading" en false para indicar que se termino de cargar
+  }, []) // <- Se ejecuta unicamente al montar el componente
 
-  const toggleParrafo = () => {
-    // setIsLoading(true)
-    // if (parrafo === '') {
-    //   setParrafo('Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque officia, saepe illum amet at error ullam aliquid quas pariatur vel harum magni reiciendis libero possimus blanditiis quibusdam magnam vero beatae.')
-    // } else {
-    //   setParrafo('')
-    // }
-    // setIsLoading(false)
-    startTransition(async () => { // <- Le indicamos donde comienza la transicion
-      if (parrafo === '') {
-        setParrafo('Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque officia, saepe illum amet at error ullam aliquid quas pariatur vel harum magni reiciendis libero possimus blanditiis quibusdam magnam vero beatae.')
-      } else {
-        setParrafo('')
-      }
-    })
-  }
+  console.log(products) // Verificamos en consola que estemos recibiendo los datos, al cambiar el estado
 
-  if (isLoading) { // Si la transicion esta pendiente, entonces mostramos una pantalla de carga en la UI
-    return <h1>Cargando Parrafo...</h1>
+  // Usamos un condicional para indicar que esta cargando, en caso de que "loading" sea true
+  if (loading) {
+    return <p>CARGANDO PRODUCTOS...</p>
   }
 
   return (
     <main>
-      <button onClick={toggleParrafo}>Mostrar/Ocultar párrafo</button>
-      <p>
-        {parrafo}
-      </p>
+      {/* 
+        Iteramos el array de productos (estado), y en cada iteracion mostramos el elemento JSX o componente que deseamos.
+        Debemos utilizar la prop "key" para que React pueda optimizar la lista de componentes. Debe ser un valor unico para cada elemento.
+      */}
+      {products.map(item => <Card key={item.id} product={item} />)}
     </main>
   )
 }

@@ -9,12 +9,30 @@ function Navbar() {
    */
   const { usuario } = useContext(authContext) // <- Ejecutamos el use Context, pasandole la definicion del contexto por parametro
 
+  // Creamos un array de elementos, y que cada elemento tenga la URL y el titulo correspondiente a cada link
+  const links = [
+    {
+      url: '#',
+      title: 'Home'
+    },
+    {
+      url: '#products',
+      title: 'Producto'
+    },
+    {
+      url: '#contact',
+      title: 'Contacto'
+    },
+    {
+      url: '/profile',
+      title: `Perfil de ${usuario}` // <- Acá usamos el estado global del contexto 
+    },
+  ]
+
   return (
     <nav>
-      <a href="#">Home</a>
-      <a href="">Producto</a>
-      <a href="">Contacto</a>
-      <a href="">Perfil de {usuario}</a> {/* <- Acá usamos el estado global del contexto */}
+      {/* Mapeamos el array "links" para mostrar de manera dinamica la informacion en la UI del menu */}
+      {links.map((elemento, index) => <a key={index} href={elemento.url}>{elemento.title}</a>)}
     </nav>
   )
 }
