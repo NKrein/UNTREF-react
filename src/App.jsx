@@ -1,14 +1,13 @@
-import React, { useCallback, useMemo, useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Content from './components/Content'
-import AuthProvider from './context/AuthProvider' // <- Importamos el provider del contexto que creamos
+import AuthProvider from './context/AuthProvider'
 import Contador from './components/Contador'
 
-const App = (props) => {
+const App = () => {
 
   return (
-    <AuthProvider> {/* <- Acá utilizamos el contexto, para envolver la aplicacion */}
+    <AuthProvider>
       <section>
         <Navbar />
         <Content />
