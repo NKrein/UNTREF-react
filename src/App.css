@@ -50,3 +50,19 @@ nav > a {
   text-decoration: none;
   color: var(--pearl-800);
 }
+
+.card {
+  padding: 1rem;
+  background-color: #c0bc89;
+  color: #2e241a;
+  margin: 1rem;
+  border-radius: 1rem;
+}
+
+.card-link {
+  text-decoration: none;
+  padding: .5rem;
+  border: solid 2px #544533;
+  color: #544533;
+  border-radius: .5rem;
+}
