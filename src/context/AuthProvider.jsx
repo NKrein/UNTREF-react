@@ -4,10 +4,11 @@ export const authContext = createContext()
 
 const AuthProvider = (prop) => {
 
-  const [user, setUser] = useState('anonimo')
+  const [user, setUser] = useState(null)
 
   const globalValue = {
-    usuario: user
+    usuario: user,
+    nuevoUsuario: setUser
   }
 
   return (
