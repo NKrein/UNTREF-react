@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { authContext } from '../context/AuthProvider'
+import { Button, TextField } from '@mui/material'
 
 const LoginForm = () => {
 
@@ -70,11 +71,13 @@ const LoginForm = () => {
 
   return (
     <form className='login-form' onSubmit={handleSubmit}>
-      <label htmlFor="user">Usuario</label>
-      <input id='user' type="text" onChange={handleUser} />
-      <label htmlFor="password">Contraseña</label>
-      <input id='password' type="password" onChange={handlePassword} />
-      <button>Ingresar</button>
+      {/* <label htmlFor="user">Usuario</label>
+      <input id='user' type="text" onChange={handleUser} /> */}
+      <TextField id="user" label="Usuario" variant="standard" onChange={handleUser}/>
+      {/* <label htmlFor="password">Contraseña</label>
+      <input id='password' type="password" onChange={handlePassword} /> */}
+      <TextField id="password" label="Contraseña" variant="standard" onChange={handlePassword} type='password'/>
+      <Button variant="outlined">Outlined</Button>      
       <span>{error}</span>
     </form>
   )
