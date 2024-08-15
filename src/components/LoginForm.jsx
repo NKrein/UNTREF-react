@@ -1,31 +1,17 @@
 import React, { useContext, useState } from 'react'
 import { authContext } from '../context/AuthProvider'
 import { Button, TextField } from '@mui/material'
+import { errorContext } from '../context/ErrorContext'
 
 const LoginForm = () => {
 
-  /**
-   * Pasos a seguir para manejar un formulario:
-   * 1) Definimos los estados que queremos manejar (uno por cada input)
-   * 2) Definimos las funciones manejadoras que necesitamos para cada input
-   * 3) Colocamos dichas funciones con el evento onChange de cada input
-   * 4) Definimos una funcion para manejar el envio del formulario
-   * 5) Utilizamos el evento onSubmit para la accion del formulario
-   * 6) Realizamos validaciones de la informacion que el usuario ingresa
-   */
-
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
   const { nuevoUsuario } = useContext(authContext)
+  const { showError } = useContext(errorContext) // <- Nos traemos la funcion para los errores
 
   const handleUser = (e) => {
     const input = e.target.value
-    // if (input.length < 3) {
-    //   setError('El usuario tiene que tener al menos 3 caracteres.')
-    // } else {
-    //   setError('')
-    // }
     setUser(input)
   }
 
@@ -36,49 +22,38 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    // Utilizamos el bloque Try/Catch para el manejo de errores
+    try {
+      if (user.length < 3) {
+        throw new Error('El usuario tiene que tener al menos 3 caracteres.')
+      }
 
-    if (user.length < 3) {
-      setError('El usuario tiene que tener al menos 3 caracteres.')
-      return
-    } else {
-      setError('')
+      if (password.length < 6) {
+        throw new Error('La contraseña debe tener al menos 6 caracteres.');
+      }
+
+      if (user !== 'Nico') {
+        throw new Error('El usuario es incorrecto.');
+      }
+
+      if (password !== '123123') {
+        throw new Error('Contraseña incorrecta.');
+      }
+
+      // Si pasa todas las validaciones, entonces no entra al catch ni muestra el error
+      e.target.reset()
+      nuevoUsuario(user)
+    } catch (error) {
+      // Si entra al catch, usamos la funcion "showError" del contexto "errorContext" para mostrar el mensaje
+      showError(error.message)
     }
-
-    if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.')
-      return
-    } else {
-      setError('')
-    }
-
-    if (user !== 'Nico') {
-      setError('El usuario es incorrecto')
-      return
-    } else {
-      setError('')
-    }
-
-    if (password !== '123123') {
-      setError('Contraseña incorrecta')
-      return
-    } else {
-      setError('')
-    }
-
-    e.target.reset()
-    nuevoUsuario(user)
   }
 
   return (
     <form className='login-form' onSubmit={handleSubmit}>
-      {/* <label htmlFor="user">Usuario</label>
-      <input id='user' type="text" onChange={handleUser} /> */}
-      <TextField id="user" label="Usuario" variant="standard" onChange={handleUser}/>
-      {/* <label htmlFor="password">Contraseña</label>
-      <input id='password' type="password" onChange={handlePassword} /> */}
-      <TextField id="password" label="Contraseña" variant="standard" onChange={handlePassword} type='password'/>
-      <Button variant="outlined">Outlined</Button>      
-      <span>{error}</span>
+      <TextField id="user" label="Usuario" variant="standard" onChange={handleUser} />
+      <TextField id="password" label="Contraseña" variant="standard" onChange={handlePassword} type='password' />
+      <Button variant="outlined" type='submit'>Iniciar sesión</Button>
     </form>
   )
 }
